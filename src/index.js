@@ -20,9 +20,7 @@ const src = () => {
       <Button
         onPress={async () => {
           setLoading(true);
-          const teste = await DocumentPicker.getDocumentAsync({
-            copyToCacheDirectory: false,
-          });
+          const teste = await DocumentPicker.getDocumentAsync();
 
           console.log('aqui', teste);
 
