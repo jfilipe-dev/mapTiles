@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Button} from 'react-native';
+import {Button, ActivityIndicator} from 'react-native';
 
 import * as DocumentPicker from 'expo-document-picker';
 import {unzip} from 'react-native-zip-archive';
@@ -13,11 +13,13 @@ import MapView, {LocalTile} from 'react-native-maps';
 
 const src = () => {
   const [pathMap, setPathMap] = useState('');
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
       <Button
         onPress={async () => {
+          setLoading(true);
           const teste = await DocumentPicker.getDocumentAsync();
 
           console.log('aqui', teste);
@@ -35,10 +37,15 @@ const src = () => {
             })
             .catch(error => {
               console.error(error);
+            })
+            .finally(() => {
+              setLoading(false);
             });
         }}
         title="aqui"
       />
+
+      {loading && <ActivityIndicator color="#fff" size="large" />}
 
       <MapView
         initialRegion={{
