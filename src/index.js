@@ -7,7 +7,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import {unzip} from 'react-native-zip-archive';
 import * as FileSystem from 'expo-file-system';
 
-import MapView, {LocalTile} from 'react-native-maps';
+import MapView, {LocalTile, UrlTile} from 'react-native-maps';
 
 // import { Container } from './styles';
 
@@ -20,7 +20,9 @@ const src = () => {
       <Button
         onPress={async () => {
           setLoading(true);
-          const teste = await DocumentPicker.getDocumentAsync();
+          const teste = await DocumentPicker.getDocumentAsync({
+            copyToCacheDirectory: false,
+          });
 
           console.log('aqui', teste);
 
@@ -58,10 +60,10 @@ const src = () => {
           width: 300,
           height: 700,
         }}>
-        <LocalTile
-          pathTemplate={pathMap + '/{z}/{x}/{y}.png'}
-          tileSize={126}
-          style={{zIndex: -1}}
+        <UrlTile
+          urlTemplate={pathMap + '/{z}/{x}/{y}.png'}
+          size={256}
+          zIndex={1}
         />
       </MapView>
     </>
